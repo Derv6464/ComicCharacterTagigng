@@ -47,70 +47,103 @@ for i in range(len(allchar)):
     
 noDup = list(dict.fromkeys(onlychar))
 
+print("How many characters are you looking for?")
+charNum = int(input())
 
-print("what character do you want to read?")
-char = str(input())
+allChar = []
 
-posChar =[]
-for i in range(len(noDup)):
-    if char in noDup[i] or char.lower() in noDup[i].lower():
-        posChar.append(noDup[i])
+for k in range(charNum):
+    print("what character do you want to read?  ["+str(k+1)+"]")
+    char = str(input())
 
-print("all characters that match your input")
-for i in range(len(posChar)):
-    print("[" + str(i+1) + "] " + posChar[i])
+    posChar =[]
+    for i in range(len(noDup)):
+        if char in noDup[i] or char.lower() in noDup[i].lower():
+            posChar.append(noDup[i])
+
+    print("all characters that match your input")
+    for i in range(len(posChar)):
+        print("[" + str(i+1) + "] " + posChar[i])
     
-chosNum = int(input("choose which character you were referenceing\n"))
-chosChar = posChar[chosNum-1]
+    chosNum = int(input("choose which character you were referenceing\n"))
+    chosChar = posChar[chosNum-1]
 
-print("In what way do you want them to appear")
-print("[1] Featured Character \n[2] Supporting Character\n[3] Other Character\n[4] Antagonist\n[5] All\n[6] Done")
-charType = []
-typeChar = 0
-while typeChar != 6:
-    typeChar = int(input())
-    charType.append(typeChar)
+    print("In what way do you want them to appear")
+    print("[1] Featured Character \n[2] Supporting Character\n[3] Other Character\n[4] Antagonist\n[5] All\n[6] Done")
+    charType = []
+    typeChar = 0
+    while typeChar != 6:
+        typeChar = int(input())
+        charType.append(typeChar)
     
-charType = list(dict.fromkeys(charType))
-charType.remove(6)
+    charType = list(dict.fromkeys(charType))
+    charType.remove(6)
 
         
-comicChar = []        
-for i in range(len(charType)):
-    if charType[i] == 1:
-        for j in range(len(feat)):
-            if chosChar in feat[j][1]:
-                comicChar.append(feat[j][0]+" - "+list1[int(feat[j][0])])
-    elif charType[i] == 2:
-        for j in range(len(supp)):
-            if chosChar in supp[j][1]:
-                comicChar.append(supp[j][0]+" - "+list1[int(supp[j][0])])
-    elif charType[i] == 3:
-        for j in range(len(other)):
-            if chosChar in other[j][1]:
-                comicChar.append(other[j][0]+" - "+list1[int(other[j][0])])
-    elif charType[i] == 4:
-        for j in range(len(antag)):
-            if chosChar in antag[j][1]:
-                comicChar.append(antag[j][0]+" - "+list1[int(antag[j][0])])
-    elif charType[i] == 5:
-        for j in range(len(feat)):
-            if chosChar in feat[j][1]:
-                comicChar.append(feat[j][0]+" - "+list1[int(feat[j][0])])
-        for j in range(len(supp)):
-            if chosChar in supp[j][1]:
-                comicChar.append(supp[j][0]+" - "+list1[int(supp[j][0])])
-        for j in range(len(other)):
-            if chosChar in other[j][1]:
-                comicChar.append(other[j][0]+" - "+list1[int(other[j][0])])
-        for j in range(len(antag)):
-            if chosChar in antag[j][1]:
-                comicChar.append(antag[j][0]+" - "+list1[int(antag[j][0])])
-    else:
-        print("please put what category you want for your character")
+    comicChar = []        
+    for i in range(len(charType)):
+        if charType[i] == 1:
+            for j in range(len(feat)):
+                if chosChar in feat[j][1]:
+                    comicChar.append(feat[j][0]+" - "+list1[int(feat[j][0])])
+        elif charType[i] == 2:
+            for j in range(len(supp)):
+                if chosChar in supp[j][1]:
+                    comicChar.append(supp[j][0]+" - "+list1[int(supp[j][0])])
+        elif charType[i] == 3:
+            for j in range(len(other)):
+                if chosChar in other[j][1]:
+                    comicChar.append(other[j][0]+" - "+list1[int(other[j][0])])
+        elif charType[i] == 4:
+            for j in range(len(antag)):
+                if chosChar in antag[j][1]:
+                    comicChar.append(antag[j][0]+" - "+list1[int(antag[j][0])])
+        elif charType[i] == 5:
+            for j in range(len(feat)):
+                if chosChar in feat[j][1]:
+                    comicChar.append(feat[j][0]+" - "+list1[int(feat[j][0])])
+            for j in range(len(supp)):
+                if chosChar in supp[j][1]:
+                    comicChar.append(supp[j][0]+" - "+list1[int(supp[j][0])])
+            for j in range(len(other)):
+                if chosChar in other[j][1]:
+                    comicChar.append(other[j][0]+" - "+list1[int(other[j][0])])
+            for j in range(len(antag)):
+                if chosChar in antag[j][1]:
+                    comicChar.append(antag[j][0]+" - "+list1[int(antag[j][0])])
+        else:
+            print("please put what category you want for your character")
+    allChar.append(comicChar)
 
-for chars in comicChar:
-    print(chars)
+bothComic = []
+allCharComic = []
+bothComic = allChar[0]
+comicToStay = []
+if charNum > 1:
+    for i in range(len(allChar)-1):
+        comicToStay = []
+      #all comics in 0 & 1, then (all 1 & 0) in 2
+        if i == 0 :
+            for j in range(len(allChar[i+1])):
+                if allChar[i+1][j] in bothComic:
+                    comicToStay.append(allChar[i+1][j])
+            bothComic = []
+        else:
+            for j in range(len(allChar[i+1])):
+                if allChar[i+1][j] in bothComic[i-1]:
+                    comicToStay.append(allChar[i+1][j]) 
+        
+        bothComic.append([comicToStay])
+            
+        #bothComic = [k for l, k in enumerate(bothComic) if l not in comicToGo]
+
+    both1 = bothComic[1]                    
+    for charp in both1:
+        print(charp)
+
+#else:
+    #for chars in comicChar:
+      #  print(chars)
 
 
 
