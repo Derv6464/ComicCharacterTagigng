@@ -2,16 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import csv
-f = open("webpages.csv","r")
+f = open("AllLinks.csv","r")
 d = open("feat.csv","w")
 s = open("suppChar.csv","w")
 o = open("otherChar.csv","w")
 a = open("antagChar.csv","w") #opening files
 
 dataIn = f.read()
-list1 = dataIn.split(",")
-for i in range(1699):                 #for ammount of links
-    r = requests.get(list1[i])        #get link
+list1 = dataIn.split("\n")
+for i in range(52637):            #for ammount of links
+    url = "https://marvel.fandom.com/"+list1[i]
+    r = requests.get(url)        #get link
     soup = BeautifulSoup(r.content, 'html.parser')       #get web contents
     results = soup.find('div', class_='mw-parser-output')    #getting ceratin part of website
     bruh = str(results)   #putting in var
@@ -52,7 +53,7 @@ for i in range(1699):                 #for ammount of links
         #print("other")
     if 'Villains:' in seartxt:
         villans = 1
-        print("villans", i)
+        #print("villans", i)
     if 'RacesandSpecies:' in seartxt:
         rAnds = 1
         #print("r&s")
@@ -210,5 +211,3 @@ o.close()
 s.close()
 f.close()
 print("done")
-
-

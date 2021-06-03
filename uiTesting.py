@@ -117,28 +117,22 @@ for k in range(charNum):
 
 bothComic = []
 allCharComic = []
-bothComic = allChar[0]
 comicToStay = []
 if charNum > 1:
-    for i in range(len(allChar)-1):
-        comicToStay = []
-      #all comics in 0 & 1, then (all 1 & 0) in 2
-        if i == 0 :
-            for j in range(len(allChar[i+1])):
-                if allChar[i+1][j] in bothComic:
-                    comicToStay.append(allChar[i+1][j])
-            bothComic = []
+    for i in range(len(allChar)):
+        if i == 0:
+            curComic = allChar[0]
         else:
-            for j in range(len(allChar[i+1])):
-                if allChar[i+1][j] in bothComic[i-1]:
-                    comicToStay.append(allChar[i+1][j]) 
-        
-        bothComic.append([comicToStay])
+            for j in range(len(allChar[i])):           
+                if allChar[i][j] in curComic:
+                    comicToStay.append(allChar[i][j])
+            curComic = comicToStay
+            comicToStay=[]
             
         #bothComic = [k for l, k in enumerate(bothComic) if l not in comicToGo]
 
-    both1 = bothComic[1]                    
-    for charp in both1:
+                   
+    for charp in curComic:
         print(charp)
 
 #else:
