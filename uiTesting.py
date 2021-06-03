@@ -1,7 +1,7 @@
 import csv
-f = open("webpages.csv","r")
+f = open("AllLinks.csv","r")
 dataIn = f.read()
-list1 = dataIn.split(",")
+list1 = dataIn.split("\n")
 
 d = open("feat.csv","r")
 csv_d = csv.reader(d)
@@ -85,6 +85,7 @@ for k in range(charNum):
         if charType[i] == 1:
             for j in range(len(feat)):
                 if chosChar in feat[j][1]:
+                    #print(feat[j][0]+" - "+list1[int(feat[j][0])])
                     comicChar.append(feat[j][0]+" - "+list1[int(feat[j][0])])
         elif charType[i] == 2:
             for j in range(len(supp)):
