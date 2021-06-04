@@ -41,6 +41,8 @@ for row in csv_a:
         allchar.append(row)
     line_count = line_count + 1
 
+b = open("comicList.txt","w")
+
 onlychar = []
 for i in range(len(allchar)):
     onlychar.append(allchar[i][1])
@@ -51,7 +53,7 @@ print("How many characters are you looking for?")
 charNum = int(input())
 
 allChar = []
-
+chosChars = []
 for k in range(charNum):
     print("what character do you want to read?  ["+str(k+1)+"]")
     char = str(input())
@@ -61,13 +63,33 @@ for k in range(charNum):
         if char in noDup[i] or char.lower() in noDup[i].lower():
             posChar.append(noDup[i])
 
-    print("all characters that match your input")
-    for i in range(len(posChar)):
-        print("[" + str(i+1) + "] " + posChar[i])
-    
-    chosNum = int(input("choose which character you were referenceing\n"))
-    chosChar = posChar[chosNum-1]
+    topFive = []
+    top = 0
+    topChar = "temp"
+    cnt = True
+    while cnt == True:
+        for j in range(5):
+            l = len(posChar)-j
+            top = 0
+            for i in range(l):
+                if onlychar.count(posChar[i]) > top:
+                    topChar = posChar[i]
+                    top = onlychar.count(posChar[i])
+            topFive.append(topChar)
+            posChar.remove(topChar)
 
+        print("all characters that match your input")
+        for i in range(len(topFive)):
+            print("[" + str(i+1) + "] " + topFive[i])
+        print("[6] More")
+    
+        chosNum = int(input("choose which character you were referenceing\n"))
+        if chosNum != 6:
+            cnt = False
+            chosChar = topFive[chosNum-1]
+        
+    
+    chosChars.append(chosChar)
     print("In what way do you want them to appear")
     print("[1] Featured Character \n[2] Supporting Character\n[3] Other Character\n[4] Antagonist\n[5] All\n[6] Done")
     charType = []
@@ -116,9 +138,11 @@ for k in range(charNum):
             print("please put what category you want for your character")
     allChar.append(comicChar)
 
+
 bothComic = []
 allCharComic = []
 comicToStay = []
+curComic = []
 if charNum > 1:
     for i in range(len(allChar)):
         if i == 0:
@@ -129,13 +153,29 @@ if charNum > 1:
                     comicToStay.append(allChar[i][j])
             curComic = comicToStay
             comicToStay=[]
+else:
+    for i in range(len(allChar)):
+        for j in range(len(allChar[i])):
+            curComic.append(allChar[i][j])
+
             
         #bothComic = [k for l, k in enumerate(bothComic) if l not in comicToGo]
 
-                   
-    for charp in curComic:
-        print(charp)
+b.write("All the comics that include: ")
+for charp in chosChars:
+    if charp == chosChars[-1]:
+        b.write(charp)
+    elif charp == chosChars[-2]:
+        b.write(charp + " and ")
+    else:
+        b.write(charp+ ", ")
+    
+b.write(" are ("+str(len(curComic))+" comics):")
+for charp in curComic:
+    print(charp)
+    b.write("\n"+charp)
 
+b.close()
 #else:
     #for chars in comicChar:
       #  print(chars)
