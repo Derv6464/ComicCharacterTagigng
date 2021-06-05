@@ -50,11 +50,15 @@ for i in range(len(allchar)):
 noDup = list(dict.fromkeys(onlychar))
 
 print("How many characters are you looking for?")
-charNum = int(input())
+charNum = input()
+while charNum.isdigit() == False or int(charNum) < 1:
+    print("Invalid input")
+    charNum = input()
+
 
 allChar = []
 chosChars = []
-for k in range(charNum):
+for k in range(int(charNum) ):
     print("what character do you want to read?  ["+str(k+1)+"]")
     char = str(input())
 
@@ -62,7 +66,16 @@ for k in range(charNum):
     for i in range(len(noDup)):
         if char in noDup[i] or char.lower() in noDup[i].lower():
             posChar.append(noDup[i])
+    while not posChar:
+        print("character not found, try again")
+        print("what character do you want to read?  ["+str(k+1)+"]")
+        char = str(input())
 
+        posChar =[]
+        for i in range(len(noDup)):
+            if char in noDup[i] or char.lower() in noDup[i].lower():
+                posChar.append(noDup[i])
+        
     topFive = []
     top = 0
     topChar = "temp"
@@ -83,10 +96,14 @@ for k in range(charNum):
             print("[" + str(i+1) + "] " + topFive[i])
         print("[6] More")
     
-        chosNum = int(input("choose which character you were referenceing\n"))
-        if chosNum != 6:
+        chosNum = input("choose which character you were referenceing\n")
+        while chosNum.isdigit() == False or int(chosNum) < 1 or int(chosNum) > 6:
+            print("Invalid input")
+            chosNum = input("choose which character you were referenceing\n")
+            
+        if int(chosNum) != 6:
             cnt = False
-            chosChar = topFive[chosNum-1]
+            chosChar = topFive[int(chosNum)-1]
         
     
     chosChars.append(chosChar)
@@ -94,9 +111,12 @@ for k in range(charNum):
     print("[1] Featured Character \n[2] Supporting Character\n[3] Other Character\n[4] Antagonist\n[5] All\n[6] Done")
     charType = []
     typeChar = 0
-    while typeChar != 6:
-        typeChar = int(input())
-        charType.append(typeChar)
+    while int(typeChar) != 6:
+        typeChar = input()
+        while typeChar.isdigit() == False or int(typeChar) < 1 or int(typeChar) > 6:
+            print("Invalid input")
+            typeChar = input()
+        charType.append(int(typeChar))
     
     charType = list(dict.fromkeys(charType))
     charType.remove(6)
@@ -143,7 +163,7 @@ bothComic = []
 allCharComic = []
 comicToStay = []
 curComic = []
-if charNum > 1:
+if int(charNum) > 1:
     for i in range(len(allChar)):
         if i == 0:
             curComic = allChar[0]
